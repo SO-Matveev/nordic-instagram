@@ -14,14 +14,17 @@ const Home: NextPage = () => {
       </Head>
 
       <main className={styles.main}>
-        <h1 className={styles.title}>
-          <Link href="/posts">Список постов</Link>
-        </h1>
+        <h1> Добро пожаловать в Nordic Instagram</h1>
+        <h2 className={styles.title}>
+          <Link href="auth/register">Регистрация</Link>
+        </h2>
+        <h2 className={styles.title}>
+          <Link href="auth/login">Вход</Link>
+        </h2>
 
-        <p className={styles.description}>
-          Get started by editing{" "}
-          <code className={styles.code}>pages/index.tsx</code>
-        </p>
+        <h3 className={styles.subtitle}>
+          <Link href="/posts">Список постов</Link>
+        </h3>
 
         <div className={styles.grid}>
           <a href="https://nextjs.org/docs" className={styles.card}>
