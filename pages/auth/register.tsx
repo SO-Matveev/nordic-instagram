@@ -1,15 +1,17 @@
 import { NextPage } from "next";
+import Link from "next/link";
 import { TextField } from "@mui/material";
 import { Button } from "@mui/material";
 import { Alert } from "@mui/material";
 import { useForm } from "react-hook-form";
 import { signOut } from "firebase/auth";
-import { auth } from "../../app/firebaseApp";
+import { auth, db } from "../../app/firebaseApp";
 import {
   useAuthState,
   useCreateUserWithEmailAndPassword,
 } from "react-firebase-hooks/auth";
-import Link from "next/link";
+import { useEffect } from "react";
+import { doc, setDoc } from "firebase/firestore";
 
 type FormData = {
   name: string;
@@ -19,13 +21,22 @@ type FormData = {
 
 const Register: NextPage = () => {
   const [user] = useAuthState(auth);
-  const [createUserWithEmailAndPassword, , , error] =
+  const [createUserWithEmailAndPassword, newUser, , error] =
     useCreateUserWithEmailAndPassword(auth);
-  const { register, handleSubmit } = useForm<FormData>();
+  const { register, handleSubmit, getValues } = useForm<FormData>();
 
   const onSubmit = handleSubmit((data) => {
     createUserWithEmailAndPassword(data.email, data.password);
   });
+
+  useEffect(() => {
+    if (newUser) {
+      const uid = newUser.user.uid;
+      setDoc(doc(db, "users", uid), {
+        name: getValues("name"),
+      });
+    }
+  }, [newUser]);
 
   if (user) {
     return (
