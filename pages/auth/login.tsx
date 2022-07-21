@@ -1,4 +1,5 @@
 import { NextPage } from "next";
+import Link from "next/link";
 import { TextField } from "@mui/material";
 import { Button } from "@mui/material";
 import { Alert } from "@mui/material";
@@ -54,11 +55,16 @@ const Login: NextPage = () => {
       <Button type="submit" variant="contained" fullWidth>
         Войти в Nordic Instagram
       </Button>
-      {error?.code === "auth/wrong-password" && (
+      {error && (
         <Alert sx={{ mt: 2 }} severity="error">
-          Пароль введен неверно, повторите пароль.
+          {error?.code === "auth/wrong-password" &&
+            "Пароль введен неверно,повторите пароль."}
+          {error?.code === "auth/user-not-found" && "Аккаунт не найден."}
         </Alert>
       )}
+      <Alert sx={{ mt: 2 }} severity="info">
+        Еще нет аккаунта? <Link href="/auth/register">Зарегистрируйтесь</Link>
+      </Alert>
     </form>
   );
 };

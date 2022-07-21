@@ -9,6 +9,7 @@ import {
   useAuthState,
   useCreateUserWithEmailAndPassword,
 } from "react-firebase-hooks/auth";
+import Link from "next/link";
 
 type FormData = {
   name: string;
@@ -67,6 +68,9 @@ const Register: NextPage = () => {
           Email уже занят
         </Alert>
       )}
+      <Alert sx={{ mt: 2 }} severity="info">
+        Уже есть аккаунт? <Link href="/auth/login">Войдите.</Link>
+      </Alert>
     </form>
   );
 };
