@@ -15,6 +15,9 @@ const Posts: NextPage = () => {
       {posts &&
         posts.map((post) => (
           <div key={post.id}>
+            {post.createdAt && (
+              <span>{post.createdAt.toLocaleDateString()}</span>
+            )}
             <Link href={`/posts/${post.id}`}>{post.text}</Link>
           </div>
         ))}
