@@ -3,6 +3,7 @@ type Post = {
   id: string;
   text: string;
   createdAt: Date | null;
+  imageURL: string;
 };
 
 export default Post;

@@ -4,6 +4,7 @@ import { useCollectionData } from "react-firebase-hooks/firestore";
 import { db } from "../../app/firebaseApp";
 import Link from "next/link";
 import postConverter from "../../helpers/postConverter";
+import { Button } from "@mui/material";
 
 const Posts: NextPage = () => {
   const postsRef = collection(db, "posts").withConverter(postConverter);
@@ -13,6 +14,13 @@ const Posts: NextPage = () => {
   return (
     <div>
       <h1>Список постов</h1>
+      <h2>
+        {" "}
+        <Button variant="text">
+          <Link href="/posts/new">Создать новый пост</Link>
+        </Button>
+      </h2>
+
       {posts &&
         posts.map((post) => (
           <div key={post.id}>
@@ -22,6 +30,9 @@ const Posts: NextPage = () => {
             <Link href={`/posts/${post.id}`}>{post.text}</Link>
           </div>
         ))}
+      <Button variant="outlined" sx={{ mt: 2 }}>
+        <Link href="/">На главную</Link>
+      </Button>
     </div>
   );
 };
