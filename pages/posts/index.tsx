@@ -29,7 +29,7 @@ const Posts: NextPage = () => {
             <Post post={post} />
           </Box>
         ))}
-      <Button variant="outlined" sx={{ mt: 2 }}>
+      <Button variant="outlined" sx={{ mb: 2 }}>
         <Link href="/">На главную</Link>
       </Button>
     </div>
