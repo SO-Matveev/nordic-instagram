@@ -8,7 +8,7 @@ import { ChangeEvent } from "react";
 
 const Profile = () => {
   const [user] = useAuthState(auth);
-  const docRef = doc(db, "users", user?.uid || "null");
+  const docRef = doc(db, "users", String(user?.uid));
   const [userProfile] = useDocumentData(docRef);
 
   if (!user || !userProfile) {

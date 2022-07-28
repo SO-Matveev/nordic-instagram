@@ -5,6 +5,8 @@ import { db } from "../../app/firebaseApp";
 import Link from "next/link";
 import postConverter from "../../helpers/postConverter";
 import { Button } from "@mui/material";
+import Post from "../../components/Post";
+import Box from "@mui/material/Box";
 
 const Posts: NextPage = () => {
   const postsRef = collection(db, "posts").withConverter(postConverter);
@@ -23,12 +25,9 @@ const Posts: NextPage = () => {
 
       {posts &&
         posts.map((post) => (
-          <div key={post.id}>
-            {post.createdAt && (
-              <span>{post.createdAt.toLocaleDateString()}</span>
-            )}{" "}
-            <Link href={`/posts/${post.id}`}>{post.text}</Link>
-          </div>
+          <Box key={post.id} sx={{ mb: 2, maxWidth: "500px" }}>
+            <Post post={post} />
+          </Box>
         ))}
       <Button variant="outlined" sx={{ mt: 2 }}>
         <Link href="/">На главную</Link>
