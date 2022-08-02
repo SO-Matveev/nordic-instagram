@@ -15,7 +15,7 @@ const Comments: FC<CommentProps> = ({ comments }) => {
   return (
     <div>
       {comments.map((comment) => (
-        <Card sx={{ mb: 2, p: 2 }} key={comment.id}>
+        <Card sx={{ my: 2, p: 2 }} key={comment.id}>
           <div>{comment.user.name}</div>
           {comment.createdAt ? (
             <div>

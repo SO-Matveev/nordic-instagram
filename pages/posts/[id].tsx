@@ -14,7 +14,7 @@ import {
   useDocumentData,
   useCollectionData,
 } from "react-firebase-hooks/firestore";
-import Post from "../../components/Post";
+import PostContainer from "../../containers/PostContainer";
 import { auth, db } from "../../app/firebaseApp";
 import postConverter from "../../helpers/postConverter";
 import Comments from "../../components/Comments";
@@ -56,7 +56,7 @@ const PostPage: NextPage = () => {
   return (
     <div>
       <h1>Страница поста</h1>
-      {post && <Post post={post} />}
+      {post && <PostContainer post={post} />}
       {comments && <Comments comments={comments} />}
       <CommentForm onSubmit={handleCommentSubmit} />
     </div>
