@@ -13,9 +13,11 @@ import { ru } from "date-fns/locale";
 
 type PostPropTypes = {
   post: PostType;
+  onLikeClick?: () => void;
+  liked?: boolean;
 };
 
-const Post: FC<PostPropTypes> = ({ post }) => {
+const Post: FC<PostPropTypes> = ({ post, onLikeClick, liked }) => {
   const date = post.createdAt
     ? formatDistance(post.createdAt, new Date(), {
         addSuffix: true,
@@ -36,8 +38,9 @@ const Post: FC<PostPropTypes> = ({ post }) => {
 
       <CardContent>{post.text}</CardContent>
       <CardActions>
-        <IconButton>
-          <FavoriteIcon />
+        <IconButton onClick={onLikeClick}>
+          <FavoriteIcon sx={{ color: liked ? "red" : "gray" }} />
+          {post.likesCount > 0 ? post.likesCount : ""}
         </IconButton>
       </CardActions>
     </Card>

@@ -5,6 +5,7 @@ type Post = {
   text: string;
   createdAt: Date | null;
   imageURL: string;
+  likesCount: number;
 };
 
 export default Post;
