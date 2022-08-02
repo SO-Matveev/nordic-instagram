@@ -59,6 +59,7 @@ const New = () => {
       }
     }
   };
+  register("imageURL", { required: true });
   return (
     <div>
       <h1>Новый пост</h1>
@@ -71,12 +72,7 @@ const New = () => {
             sx={{ mb: 1 }}
           >
             Загрузить фото
-            <input
-              type="file"
-              hidden
-              {...register("imageURL")}
-              onChange={handleFileChange}
-            />
+            <input type="file" hidden onChange={handleFileChange} />
           </Button>
         </div>
         {errors.imageURL && (
