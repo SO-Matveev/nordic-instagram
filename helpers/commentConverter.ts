@@ -22,7 +22,9 @@ const commentConverter: FirestoreDataConverter<Comment> = {
       user: data.user,
       id: snapshot.id,
       text: data.text,
-      createdAt: new Date(data.createdAt?.seconds * 1000),
+      createdAt: data.createdAt
+        ? new Date(data.createdAt?.seconds * 1000)
+        : null,
     };
   },
 };
