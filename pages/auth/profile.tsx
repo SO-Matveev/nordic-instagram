@@ -29,15 +29,17 @@ const Profile = () => {
     <div>
       <h1>Профиль пользователя</h1>
       <p>ID: {user?.uid}</p>
-      <p>
-        <TextField
-          id="standard-basic"
-          label="Имя"
-          variant="standard"
-          value={userProfile.name}
-          onChange={handleNameChange}
-        />
-      </p>
+      {userProfile && (
+        <div>
+          <TextField
+            id="standard-basic"
+            label="Имя"
+            variant="standard"
+            value={userProfile.name}
+            onChange={handleNameChange}
+          />
+        </div>
+      )}
     </div>
   );
 };
