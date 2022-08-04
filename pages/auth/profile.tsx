@@ -1,17 +1,14 @@
-import { doc, updateDoc } from "firebase/firestore";
-import { auth, db } from "../../app/firebaseApp";
-import { useDocumentData } from "react-firebase-hooks/firestore";
-import { useAuthState } from "react-firebase-hooks/auth";
+import { updateDoc } from "firebase/firestore";
+
 import Link from "next/link";
 import { Alert, TextField } from "@mui/material";
 import { ChangeEvent } from "react";
+import useUserProfile from "../../helpers/useUserProfile";
 
 const Profile = () => {
-  const [user] = useAuthState(auth);
-  const docRef = doc(db, "users", String(user?.uid));
-  const [userProfile] = useDocumentData(docRef);
+  const { userProfile, userRef } = useUserProfile();
 
-  if (!user || !userProfile) {
+  if (!userProfile) {
     return (
       <div>
         <Alert sx={{ mt: 2 }} severity="info">
@@ -21,14 +18,14 @@ const Profile = () => {
     );
   }
   const handleNameChange = (event: ChangeEvent<HTMLInputElement>) => {
-    updateDoc(docRef, {
+    updateDoc(userRef, {
       name: event.target.value,
     });
   };
   return (
     <div>
       <h1>Профиль пользователя</h1>
-      <p>ID: {user?.uid}</p>
+      <p>ID: {userProfile?.uid}</p>
       {userProfile && (
         <div>
           <TextField

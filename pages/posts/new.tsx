@@ -2,23 +2,22 @@ import { ChangeEvent } from "react";
 import { collection, addDoc, serverTimestamp, doc } from "firebase/firestore";
 import { ref, getDownloadURL } from "firebase/storage";
 import { useForm } from "react-hook-form";
-import { useAuthState } from "react-firebase-hooks/auth";
 import { useUploadFile } from "react-firebase-hooks/storage";
 import { useRouter } from "next/router";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
-import { auth, db, storage } from "../../app/firebaseApp";
+import { storage } from "../../app/firebaseApp";
+import { db } from "../../app/firebaseApp";
 import { Alert } from "@mui/material";
-import { useDocumentData } from "react-firebase-hooks/firestore";
+import useUserProfile from "../../helpers/useUserProfile";
 
 type FormData = {
-  imageURL: string;
+  images: string[];
   text: string;
 };
 const New = () => {
-  const [user] = useAuthState(auth);
-  const docRef = doc(db, "users", String(user?.uid));
-  const [userProfile] = useDocumentData(docRef);
+  const { userProfile } = useUserProfile();
+
   const router = useRouter();
   const {
     register,
@@ -29,16 +28,16 @@ const New = () => {
   } = useForm<FormData>();
   const [uploadFile, uploading] = useUploadFile();
 
-  const imageURLValue = watch("imageURL");
+  const imagesValue = watch("images");
 
   const onSubmit = handleSubmit(async (data) => {
-    if (user && userProfile) {
+    if (userProfile) {
       const newPost = {
         text: data.text,
-        uid: user.uid,
-        user: { name: userProfile.name },
+        uid: userProfile.uid,
+        name: userProfile.name,
         createdAt: serverTimestamp(),
-        imageURL: data.imageURL,
+        images: data.images,
       };
       const docRef = await addDoc(collection(db, "posts"), newPost);
       router.push(`/posts/${docRef.id}`);
@@ -47,19 +46,23 @@ const New = () => {
 
   const handleFileChange = async (event: ChangeEvent<HTMLInputElement>) => {
     if (event.target.files) {
-      const fileRef = ref(
-        storage,
-        `${Date.now()}-${event.target.files[0].name}`
-      );
-      const result = await uploadFile(fileRef, event.target.files[0]);
-      console.log(result);
-      if (result) {
-        const imageURL = await getDownloadURL(result?.ref);
-        setValue("imageURL", imageURL);
+      const fileUploads = Array.from(event.target.files).map(async (file) => {
+        const fileRef = ref(storage, `${Date.now()}-${file.name}`);
+        const result = await uploadFile(fileRef, file);
+        console.log(result);
+        if (result) {
+          return await getDownloadURL(result?.ref);
+        }
+        return "";
+      });
+      const results = await Promise.all(fileUploads);
+
+      if (results) {
+        setValue("images", results, { shouldValidate: true });
       }
     }
   };
-  register("imageURL", { required: true });
+  register("images", { required: true });
   return (
     <div>
       <h1>Новый пост</h1>
@@ -72,15 +75,18 @@ const New = () => {
             sx={{ mb: 1 }}
           >
             Загрузить фото
-            <input type="file" hidden onChange={handleFileChange} />
+            <input multiple type="file" hidden onChange={handleFileChange} />
           </Button>
         </div>
-        {errors.imageURL && (
-          <Alert severity="error">Пожалуйста, загрузите фото</Alert>
+        {errors.images && (
+          <Alert severity="error">
+            Пожалуйста, загрузите хотя бы одно фото
+          </Alert>
         )}
-        {imageURLValue && (
-          <img src={imageURLValue} alt="" style={{ width: 200 }} />
-        )}
+        {imagesValue &&
+          imagesValue.map((image) => (
+            <img key={image} src={image} alt="" style={{ width: 200 }} />
+          ))}
         <TextField
           {...register("text")}
           multiline

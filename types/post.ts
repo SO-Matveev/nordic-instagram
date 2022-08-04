@@ -4,7 +4,7 @@ type Post = {
   id: string;
   text: string;
   createdAt: Date | null;
-  imageURL: string;
+  images: string[];
   likesCount: number;
   commentsCount: number;
 };
