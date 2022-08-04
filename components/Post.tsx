@@ -11,6 +11,7 @@ import type PostType from "../types/post";
 import { FC } from "react";
 import { formatDistance } from "date-fns";
 import { ru } from "date-fns/locale";
+import Images from "../components/Images";
 
 type PostPropTypes = {
   post: PostType;
@@ -28,15 +29,7 @@ const Post: FC<PostPropTypes> = ({ post, onLikeClick, liked }) => {
   return (
     <Card>
       {post.user && <CardHeader title={post.user.name} subheader={date} />}
-      {post.images && (
-        <Link href={`/posts/${post.id}`}>
-          <a>
-            {post.images.map((image) => (
-              <CardMedia key={image} component="img" image={image} />
-            ))}
-          </a>
-        </Link>
-      )}
+      {post.images && <Images images={post.images} />}
       <CardContent>{post.text}</CardContent>
       <CardActions>
         <IconButton onClick={onLikeClick}>
