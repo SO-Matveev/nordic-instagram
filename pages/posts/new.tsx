@@ -35,7 +35,7 @@ const New = () => {
       const newPost = {
         text: data.text,
         uid: userProfile.uid,
-        name: userProfile.name,
+        user: { name: userProfile.name },
         createdAt: serverTimestamp(),
         images: data.images,
       };

@@ -27,22 +27,20 @@ const Post: FC<PostPropTypes> = ({ post, onLikeClick, liked }) => {
     : "";
   return (
     <Card>
-      <CardHeader
-        title={post.user.name}
-        subheader={post.createdAt ? post.createdAt?.toLocaleDateString() : ""}
-      />
-      <Link href={`/posts/${post.id}`}>
-        <a>
-          {post.images.map((image) => (
-            <CardMedia key={image} component="img" image={image} />
-          ))}
-        </a>
-      </Link>
-
+      {post.user && <CardHeader title={post.user.name} subheader={date} />}
+      {post.images && (
+        <Link href={`/posts/${post.id}`}>
+          <a>
+            {post.images.map((image) => (
+              <CardMedia key={image} component="img" image={image} />
+            ))}
+          </a>
+        </Link>
+      )}
       <CardContent>{post.text}</CardContent>
       <CardActions>
         <IconButton onClick={onLikeClick}>
-          <FavoriteIcon sx={{ color: liked ? "red" : "gray" }} />
+          <FavoriteIcon sx={{ color: liked ? "red" : "gray" }} />{" "}
         </IconButton>
         {post.likesCount > 0 ? post.likesCount : ""}
         <CommentIcon sx={{ ml: 3, mr: 1, color: "gray" }} />
