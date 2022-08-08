@@ -28,21 +28,23 @@ const Post: FC<PostPropTypes> = ({ post, onLikeClick, liked }) => {
       })
     : "";
   return (
-    <Card>
-      {post.user && <CardHeader title={post.user.name} subheader={date} />}
-      {post.images && <Images images={post.images} />}
-      <CardContent>{post.text} </CardContent>
-      <CardActions>
-        <IconButton onClick={onLikeClick}>
-          <FavoriteIcon sx={{ color: liked ? "red" : "gray" }} />{" "}
-        </IconButton>
-        {post.likesCount > 0 ? post.likesCount : ""}
-        <Link href={`/posts/${post.id}`}>
-          <CommentIcon sx={{ ml: 3, mr: 1, color: "gray" }} />
-        </Link>
-        {post.commentsCount > 0 ? post.commentsCount : ""}
-      </CardActions>
-    </Card>
+    <Link href={`/posts/${post.id}`}>
+      <Card>
+        {post.user && <CardHeader title={post.user.name} subheader={date} />}
+        {post.images && <Images images={post.images} />}
+        <CardContent>{post.text} </CardContent>
+        <CardActions>
+          <IconButton onClick={onLikeClick}>
+            <FavoriteIcon sx={{ color: liked ? "red" : "gray" }} />{" "}
+          </IconButton>
+          {post.likesCount > 0 ? post.likesCount : ""}
+          <Link href={`/posts/${post.id}`}>
+            <CommentIcon sx={{ ml: 3, mr: 1, color: "gray" }} />
+          </Link>
+          {post.commentsCount > 0 ? post.commentsCount : ""}
+        </CardActions>
+      </Card>
+    </Link>
   );
 };
 
