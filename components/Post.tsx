@@ -12,6 +12,7 @@ import { FC } from "react";
 import { formatDistance } from "date-fns";
 import { ru } from "date-fns/locale";
 import Images from "../components/Images";
+import Button from "@mui/material/Button";
 
 type PostPropTypes = {
   post: PostType;
@@ -30,13 +31,15 @@ const Post: FC<PostPropTypes> = ({ post, onLikeClick, liked }) => {
     <Card>
       {post.user && <CardHeader title={post.user.name} subheader={date} />}
       {post.images && <Images images={post.images} />}
-      <CardContent>{post.text}</CardContent>
+      <CardContent>{post.text} </CardContent>
       <CardActions>
         <IconButton onClick={onLikeClick}>
           <FavoriteIcon sx={{ color: liked ? "red" : "gray" }} />{" "}
         </IconButton>
         {post.likesCount > 0 ? post.likesCount : ""}
-        <CommentIcon sx={{ ml: 3, mr: 1, color: "gray" }} />
+        <Link href={`/posts/${post.id}`}>
+          <CommentIcon sx={{ ml: 3, mr: 1, color: "gray" }} />
+        </Link>
         {post.commentsCount > 0 ? post.commentsCount : ""}
       </CardActions>
     </Card>
