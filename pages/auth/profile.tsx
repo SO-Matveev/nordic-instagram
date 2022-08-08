@@ -29,7 +29,7 @@ const Profile = () => {
   return (
     <Paper elevation={2} className="cv__paper">
       <h1>Профиль пользователя</h1>
-      <Avatar alt="" src="" sx={{ width: 65, height: 65 }} />
+      <Avatar alt="" src="" sx={{ width: 100, height: 100 }} />
       <h2>
         {userProfile.name}
         <IconButton
