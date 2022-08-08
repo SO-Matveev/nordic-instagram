@@ -15,3 +15,9 @@ a {
 * {
   box-sizing: border-box;
 }
+.cv__paper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}

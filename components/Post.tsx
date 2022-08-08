@@ -12,7 +12,6 @@ import { FC } from "react";
 import { formatDistance } from "date-fns";
 import { ru } from "date-fns/locale";
 import Images from "../components/Images";
-import Button from "@mui/material/Button";
 
 type PostPropTypes = {
   post: PostType;
