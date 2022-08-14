@@ -13,6 +13,7 @@ function useUserProfile(): {
   const userRef = doc(db, "users", String(user?.uid)).withConverter(
     userConverter
   );
+
   const [userProfile] = useDocumentData(userRef);
 
   return { userProfile, userRef };

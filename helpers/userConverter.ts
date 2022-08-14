@@ -21,6 +21,7 @@ const userConverter: FirestoreDataConverter<User> = {
       uid: snapshot.id,
       name: data.name,
       likes: data.likes,
+      photoProfile: data.photoProfileURL,
     };
   },
 };
