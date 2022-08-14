@@ -10,7 +10,6 @@ import AddAPhotoIcon from "@mui/icons-material/AddAPhoto";
 import { useUploadFile } from "react-firebase-hooks/storage";
 import { storage, db } from "../../app/firebaseApp";
 import { ref, getDownloadURL } from "firebase/storage";
-import user from "../../types/user";
 
 const Profile = () => {
   const { userProfile, userRef } = useUserProfile();
@@ -38,18 +37,21 @@ const Profile = () => {
       const result = await uploadFile(photoProfileRef, event.target.files[0]);
       if (result) {
         const photoProfileURL = await getDownloadURL(result?.ref);
-        console.log(photoProfileURL);
+        updateDoc(userRef, {
+          photoProfile: photoProfileURL,
+        });
       }
-      updateDoc(doc(db, "users", String(user?.uid)), {
-        photoProfile: photoProfileURL,
-      });
     }
   };
 
   return (
     <Paper elevation={2} className="cv__paper">
       <h1>Профиль пользователя</h1>
-      <Avatar alt="" src="" sx={{ width: 100, height: 100 }} />
+      <Avatar
+        alt="photo"
+        src={userProfile.photoProfile}
+        sx={{ width: 150, height: 150 }}
+      />
       <h2>
         {userProfile.name}
         <IconButton
