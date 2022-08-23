@@ -5,6 +5,7 @@ import styled from "styled-components";
 
 type ImagesProps = {
   images: string[];
+  onClick: () => void;
 };
 
 const Images: FC<ImagesProps> = ({ images }) => {
