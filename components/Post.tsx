@@ -17,6 +17,7 @@ type PostPropTypes = {
   post: PostType;
   onLikeClick?: () => void;
   liked?: boolean;
+  onClick: () => void;
 };
 
 const Post: FC<PostPropTypes> = ({ post, onLikeClick, liked }) => {
@@ -32,10 +33,9 @@ const Post: FC<PostPropTypes> = ({ post, onLikeClick, liked }) => {
     <Card>
       {post.user && <CardHeader title={post.user.name} subheader={date} />}
       {post.images && (
-        <Images
-          images={post.images}
-          onClick={() => router.push(`/posts/${post.id}`)}
-        />
+        <div onClick={() => router.push(`/posts/${post.id}`)}>
+          <Images images={post.images} />
+        </div>
       )}
       <CardContent>{post.text} </CardContent>
       <CardActions>
