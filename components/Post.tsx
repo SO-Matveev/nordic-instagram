@@ -5,7 +5,6 @@ import CardActions from "@mui/material/CardActions";
 import IconButton from "@mui/material/IconButton";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import CommentIcon from "@mui/icons-material/Comment";
-import Link from "next/link";
 import type PostType from "../types/post";
 import { FC } from "react";
 import { formatDistance } from "date-fns";
@@ -17,7 +16,6 @@ type PostPropTypes = {
   post: PostType;
   onLikeClick?: () => void;
   liked?: boolean;
-  onClick: () => void;
 };
 
 const Post: FC<PostPropTypes> = ({ post, onLikeClick, liked }) => {
